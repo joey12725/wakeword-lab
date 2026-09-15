@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+clips/
+models/
+piper1-gpl/
+*.onnx
+*.wav
+*.mp3
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
