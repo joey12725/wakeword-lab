@@ -1,0 +1,84 @@
+# Full-scale dataset: ~5,000 positives and ~5,500 adversarial negatives
+# spread across the 900+ speakers of Piper's multi-speaker LibriTTS-R voice,
+# plus public music and sound-effect corpora as background negatives.
+#
+#   python -m piper.download_voices --download-dir voices en_US-libritts_r-medium
+#   wakeword-lab negatives --validation
+#   wakeword-lab synth    -c configs/hey_joy_large.toml
+#   wakeword-lab train    -c configs/hey_joy_large.toml
+#   wakeword-lab evaluate -c configs/hey_joy_large.toml --fp-features data/negatives/validation_set_features.npy
+
+[wakeword]
+phrase = "Hey Joy"
+model_name = "hey_joy"
+output_dir = "runs/hey_joy_large"
+
+[[positive]]
+text = "Hey Joy."
+clips = 2500
+
+[[positive]]
+text = "Hey, Joy!"
+clips = 1500
+
+[[positive]]
+text = "Hey Joy?"
+clips = 1000
+
+[[negative]]
+text = "Hey Joey."
+clips = 2000
+weight = 2
+
+[[negative]]
+text = "Hey Joe."
+clips = 1000
+weight = 2
+
+[[negative]]
+text = "Hey Joyce."
+clips = 500
+weight = 2
+
+[[negative]]
+text = "Enjoy."
+clips = 500
+weight = 1
+
+[[negative]]
+text = "Ahoy."
+clips = 500
+weight = 1
+
+[[negative]]
+text = "Joy."
+clips = 500
+weight = 1
+
+[[negative]]
+text = "Joey."
+clips = 500
+weight = 1
+
+[synthesis]
+voices = ["en_US-libritts_r-medium", "en_US-lessac-medium", "en_US-amy-medium", "en_US-ryan-high"]
+voices_dir = "voices"
+length_scales = [0.8, 0.9, 1.0, 1.1, 1.25]
+noise_scales = [0.4, 0.667, 0.9]
+noise_w_scales = [0.5, 0.8, 1.1]
+
+[background]
+dirs = ["data/negatives/fma", "data/negatives/fsd50k"]
+max_clips = 8000
+hop_seconds = 1.0
+
+[training]
+epochs = 60
+hidden_dim = 96
+positive_copies = 1
+negative_weight = 2.5
+holdout_fraction = 0.1
+patience = 10
+
+[listen]
+threshold = 0.6

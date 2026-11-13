@@ -1,0 +1,99 @@
+# Quick start: a few hundred clips from three Piper voices.
+# Synthesizes in a couple of minutes and trains on a laptop CPU.
+
+[wakeword]
+phrase = "Hey Joy"
+model_name = "hey_joy"
+output_dir = "runs/hey_joy"
+
+[[positive]]
+text = "Hey Joy."
+clips = 45
+
+[[positive]]
+text = "Hey, Joy."
+clips = 45
+
+[[positive]]
+text = "Hey Joy!"
+clips = 45
+
+# Hard negatives: close enough to the wake phrase to fool a lazy model.
+# `weight` = extra augmented copies of each clip during training.
+[[negative]]
+text = "Hey Joey."
+clips = 30
+weight = 4
+
+[[negative]]
+text = "Hey Joe."
+clips = 20
+weight = 4
+
+[[negative]]
+text = "Hey Joyce."
+clips = 20
+weight = 3
+
+[[negative]]
+text = "Enjoy."
+clips = 20
+weight = 3
+
+[[negative]]
+text = "Joy."
+clips = 20
+weight = 3
+
+[[negative]]
+text = "Ahoy."
+clips = 15
+weight = 2
+
+[[negative]]
+text = "Hey."
+clips = 15
+weight = 2
+
+# Other assistants' wake words and everyday speech.
+[[negative]]
+text = "Hey Google."
+clips = 10
+weight = 2
+
+[[negative]]
+text = "Hey Siri."
+clips = 10
+weight = 2
+
+[[negative]]
+text = "Hey Jarvis."
+clips = 10
+weight = 2
+
+[[negative]]
+text = "Hello there."
+clips = 10
+
+[[negative]]
+text = "Good morning, how are you?"
+clips = 10
+
+[[negative]]
+text = "What's the weather like today?"
+clips = 10
+
+[synthesis]
+voices = ["en_US-lessac-medium", "en_US-amy-medium", "en_US-ryan-high"]
+voices_dir = "voices"
+length_scales = [0.85, 1.0, 1.15]
+noise_scales = [0.5, 0.667, 0.8]
+noise_w_scales = [0.6, 0.8, 1.0]
+
+[training]
+epochs = 30
+negative_weight = 2.2
+holdout_fraction = 0.15
+
+[listen]
+threshold = 0.65

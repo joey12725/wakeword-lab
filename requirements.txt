@@ -1,8 +1,0 @@
-numpy
-onnx
-onnxruntime
-openwakeword
-scipy
-sounddevice
-soxr
-torch
